@@ -1,4 +1,3 @@
-import React from 'react';
 import './UserComponent.css';
 import { Button } from 'react-bootstrap';
 

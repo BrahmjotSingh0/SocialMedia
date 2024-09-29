@@ -1,4 +1,3 @@
-import React from 'react';
 import UserComponent from './UserComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
