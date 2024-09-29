@@ -1,21 +1,22 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
-    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary rounded">
       <Container>
-        <Navbar.Brand href="#home">Social Media</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Social Media</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features">Users</Nav.Link>
-            <Nav.Link href="#pricing">Add Post</Nav.Link>
+            <Nav.Link as={Link} to="/users">Users</Nav.Link>
+            <Nav.Link as={Link} to="/add-post">Add Post</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">Signin</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
+            <Nav.Link as={Link} to="/signin">Signin</Nav.Link>
+            <Nav.Link as={Link} to="/signup" eventKey={2}>
               SignUp
             </Nav.Link>
           </Nav>
