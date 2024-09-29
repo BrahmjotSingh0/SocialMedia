@@ -49,6 +49,9 @@ const SignIn = () => {
                         required
                     />
                 </div>
+                <p>
+                    Create a new account? <a href="/signup">Sign Up</a>
+                </p>
                 <button type="submit" className="btn">Sign In</button>
             </form>
             <button onClick={handleResetPassword} className="btn">Reset Password</button>
