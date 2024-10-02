@@ -1,0 +1,79 @@
+.feed-component {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Ensure content stays within the component */
+}
+
+.feed-header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid #007bff;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #007bff;
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  max-width: 100%; /* Ensure the image does not exceed the container width */
+  display: block; /* Ensure the image is treated as a block element */
+}
+
+.feed-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.likes, .comments {
+  font-weight: bold;
+  color: #555;
+}
+
+.comment-box {
+  width: 100%;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.comment-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .feed-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .feed-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .likes, .comments {
+    margin-bottom: 10px;
+  }
+}
