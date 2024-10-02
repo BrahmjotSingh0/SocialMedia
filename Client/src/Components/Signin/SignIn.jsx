@@ -1,15 +1,21 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import './SignIn.css'; // Import the CSS file
+import axios from 'axios';
+import './SignIn.css'; 
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle sign-in logic here
-        console.log('Email:', email);
-        console.log('Password:', password);
+        try {
+            const res = await axios.post('http://localhost:3001/login', { email, password });
+            console.log('Login successful:', res.data);
+            // Save token or user data as needed
+        } catch (err) {
+            console.error('Login failed:', err);
+        }
     };
 
     const handleGoogleSignIn = () => {

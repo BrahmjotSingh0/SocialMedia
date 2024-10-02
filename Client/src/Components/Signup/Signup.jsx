@@ -1,20 +1,26 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import './Signup.css'; // Import the CSS file
+import axios from 'axios';
+import './Signup.css'; 
 
 const Signup = () => {
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             console.log('Passwords do not match');
             return;
         }
-        // Handle sign-up logic here
-        console.log('Email:', email);
-        console.log('Password:', password);
+        try {
+            const res = await axios.post('http://localhost:3001/register', { email, username, password });
+            console.log('Registration successful:', res.data);
+        } catch (err) {
+            console.error('Registration failed:', err);
+        }
     };
 
     const handleGoogleSignUp = () => {
@@ -37,6 +43,15 @@ const Signup = () => {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Username:</label>
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                 </div>

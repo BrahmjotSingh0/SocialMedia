@@ -12,7 +12,7 @@ import './App.css';
 function App() {
   return (
     <div className='main-content'>
-   <Router>v
+   <Router>
       <Navbar />
       <Routes>
         <Route path="/" element={<UserListPage />} />
