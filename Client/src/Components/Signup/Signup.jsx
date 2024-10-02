@@ -12,14 +12,18 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            console.log('Passwords do not match');
+            alert('Passwords do not match');
             return;
         }
         try {
             const res = await axios.post('http://localhost:3001/register', { email, username, password });
-            console.log('Registration successful:', res.data);
+            alert(res.data.message);
         } catch (err) {
-            console.error('Registration failed:', err);
+            if (err.response && err.response.data) {
+                alert(err.response.data.message);
+            } else {
+                alert('Registration failed');
+            }
         }
     };
 

@@ -29,11 +29,16 @@ app.post('/login', async (req, res) => {
 
 app.post('/register', async (req, res) => {
     const { email, username, password } = req.body;
-    UserModel.create({ email, username, password })
-        .then(user => {
-            res.json(user);
-        })
-        .catch(err => res.json(err));
+    try {
+        const existingUser = await UserModel.findOne({ email: email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Account already exists. Please login.' });
+        }
+        const newUser = await UserModel.create({ email, username, password });
+        res.status(201).json({ message: 'Account created successfully', user: newUser });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err });
+    }
 });
 
 app.listen(3001, () => {
