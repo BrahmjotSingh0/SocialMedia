@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Signup.css'; 
+import './Register.css'; 
 
-const Signup = () => {
+const Register = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -32,10 +32,6 @@ const Signup = () => {
         console.log('Google Sign-Up');
     };
 
-    const handleDisguisSignUp = () => {
-        // Handle Disguis OAuth logic here
-        console.log('Disguis Sign-Up');
-    };
 
     return (
         <div className="signup-container">
@@ -83,9 +79,8 @@ const Signup = () => {
                 <button type="submit" className="btn">Sign Up</button>
             </form>
             <button onClick={handleGoogleSignUp} className="btn">Sign Up with Google</button>
-            <button onClick={handleDisguisSignUp} className="btn">Sign Up with Disguis</button>
         </div>
     );
 };
 
-export default Signup;
+export default Register;
