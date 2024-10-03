@@ -15,9 +15,9 @@ function Header() {
             <Nav.Link as={Link} to="/add-post">Add Post</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link as={Link} to="/signin">Signin</Nav.Link>
-            <Nav.Link as={Link} to="/signup" eventKey={2}>
-              SignUp
+            <Nav.Link as={Link} to="/login">login</Nav.Link>
+            <Nav.Link as={Link} to="/register" eventKey={2}>
+              Register
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
