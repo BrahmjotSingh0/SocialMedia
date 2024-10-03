@@ -1,0 +1,23 @@
+.custom-navbar {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  height: 40px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.nav-link svg {
+  color: #000;
+}
+
+.nav-link:hover svg {
+  color: #007bff;
+}

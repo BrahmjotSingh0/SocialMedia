@@ -72,6 +72,7 @@ const Register = () => {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
+                    
                 </div>
                 <p>
                     Already have an account? <a href="/signin">Sign in</a>
