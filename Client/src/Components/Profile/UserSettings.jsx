@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import './UserSettings.css';
@@ -28,30 +28,31 @@ const UserSettings = ({ user }) => {
   };
 
   return (
-    <div className="user-settings">
-      <h2>User Settings</h2>
+    <div className="container user-settings">
+      <h2 className="text-center my-4">User Settings</h2>
       <form onSubmit={handleUpdate}>
-        <div className="form-group">
+        <div className="form-group mb-3">
           <label>Email</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
-        <div className="form-group">
+        <div className="form-group mb-3">
           <label>Username</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+          <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)} required />
         </div>
-        <div className="form-group">
+        <div className="form-group mb-3">
           <label>Bio</label>
-          <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
+          <textarea className="form-control" value={bio} onChange={(e) => setBio(e.target.value)} />
         </div>
-        <div className="form-group">
+        <div className="form-group mb-3">
           <label>Profile Picture URL</label>
-          <input type="text" value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} />
+          <input type="text" className="form-control" value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} />
         </div>
-        <button type="submit">Update Profile</button>
+        <button type="submit" className="btn btn-primary w-100">Update Profile</button>
       </form>
     </div>
   );
 };
+
 UserSettings.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string.isRequired,
