@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import FeedComponent from './FeedComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';

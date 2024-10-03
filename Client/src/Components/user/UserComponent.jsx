@@ -1,5 +1,6 @@
 import './UserComponent.css';
 import { Button } from 'react-bootstrap';
+import Props from 'prop-types';
 
 function UserComponent(props) {
   return (
@@ -13,5 +14,12 @@ function UserComponent(props) {
     </div>
   );
 }
+UserComponent.propTypes = {
+  username: Props.string.isRequired,
+  posts: Props.number.isRequired,
+  profile: Props.string.isRequired,
+  followers: Props.number.isRequired,
+  following: Props.number.isRequired
+};
 
 export default UserComponent;
