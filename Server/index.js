@@ -41,6 +41,17 @@ app.post('/register', async (req, res) => {
     }
 });
 
+app.put('/users/:id', async (req, res) => {
+    const { id } = req.params;
+    const { email, username, bio, profilePicture } = req.body;
+    try {
+        const updatedUser = await UserModel.findByIdAndUpdate(id, { email, username, bio, profilePicture }, { new: true });
+        res.json({ message: 'Profile updated successfully', user: updatedUser });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err });
+    }
+});
+
 app.listen(3001, () => {
     console.log('Server is running on port 3001');
 });
