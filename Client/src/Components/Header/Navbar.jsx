@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FaUserFriends, FaPlusSquare, FaSignInAlt, FaUserPlus, FaUser } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import './Navbar.css'; 
-import logo from '../../../public/assets/logo.png';
+import logo from '../../../assets/logo.png';
 
 function Header({ user, onLogout }) {
   return (
