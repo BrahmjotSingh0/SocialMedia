@@ -41,11 +41,6 @@ const UserProfile = ({ loggedInUser }) => {
       <div className="profile-header">
         <img src={user.profilePicture} alt={`${user.username}'s profile`} className="profile-image" />
         <h2 className="username">{user.username}</h2>
-        {loggedInUser && loggedInUser.username === username && (
-          <button onClick={() => navigate('/user-settings')} className="btn btn-primary">
-            Go to Settings
-          </button>
-        )}
       </div>
       <div className="profile-stats">
         <div className="stat">
@@ -64,6 +59,11 @@ const UserProfile = ({ loggedInUser }) => {
       <div className="bio">
         <p>{user.bio}</p>
       </div>
+      {loggedInUser && loggedInUser.username === username && (
+        <button onClick={() => navigate('/user-settings')} className="btn btn-primary">
+          Settings
+        </button>
+      )}
       <div className="posts-grid">
         {user.posts.map((post, index) => (
           <img key={index} src={`https://picsum.photos/200/200?random=${index}`} alt={`Post ${index + 1}`} className="post-image" />
