@@ -1,23 +1,27 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import  { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import './Login.css'; 
+import { useNavigate } from 'react-router-dom';
+import Overlay from '../Overlay/Overlay';
+import './Login.css';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [overlayMessage, setOverlayMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3001/login', { email, password });
-      if (response.data._id) {
-        onLogin(response.data);
-        console.log('Login successful:', response.data);
-        navigate('/user-settings'); // Redirect to UserSettings page after login
+      if (response.data.user) {
+        onLogin(response.data.user);
+        setOverlayMessage(response.data.message);
+        setTimeout(() => {
+          navigate('/user-settings'); // Redirect to UserSettings page after login
+        }, 2000);
       } else {
         setError('Invalid credentials');
       }
@@ -27,9 +31,14 @@ const Login = ({ onLogin }) => {
     }
   };
 
+  const closeOverlay = () => {
+    setOverlayMessage('');
+  };
+
   return (
     <div className="signin-container">
       <h2>Login</h2>
+      {overlayMessage && <Overlay message={overlayMessage} onClose={closeOverlay} />}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Email</label>
@@ -55,6 +64,7 @@ const Login = ({ onLogin }) => {
     </div>
   );
 };
+
 Login.propTypes = {
   onLogin: PropTypes.func.isRequired,
 };

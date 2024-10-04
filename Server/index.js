@@ -16,15 +16,16 @@ mongoose.connect('mongodb://127.0.0.1:27017/users')
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    UserModel.findOne({ email: email })
-        .then(user => {
-            if (user && user.password === password) {
-                res.json(user);
-            } else {
-                res.status(401).json({ message: 'Invalid credentials' });
-            }
-        })
-        .catch(err => res.status(500).json({ message: 'User not found' }));
+    try {
+        const user = await UserModel.findOne({ email: email });
+        if (user && user.password === password) {
+            res.json({ user, message: 'Login successful' });
+        } else {
+            res.status(401).json({ message: 'Invalid credentials' });
+        }
+    } catch (err) {
+        res.status(500).json({ message: 'User not found' });
+    }
 });
 
 app.post('/register', async (req, res) => {
@@ -50,7 +51,7 @@ app.put('/users/:id', async (req, res) => {
             return res.status(400).json({ message: 'Email or username already exists' });
         }
         const updatedUser = await UserModel.findByIdAndUpdate(id, { email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts }, { new: true });
-        res.json(updatedUser);
+        res.json({ user: updatedUser, message: 'User updated successfully' });
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err });
     }
