@@ -20,7 +20,7 @@ const Login = ({ onLogin }) => {
         onLogin(response.data.user);
         setOverlayMessage(response.data.message);
         setTimeout(() => {
-          navigate('/user-settings'); // Redirect to UserSettings page after login
+          navigate(`/user-profile/${response.data.user.username}`); // Redirect to UserProfile page after login
         }, 2000);
       } else {
         setError('Invalid credentials');

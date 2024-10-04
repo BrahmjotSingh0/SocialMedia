@@ -1,13 +1,16 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './UserProfile.css';
 
-const UserProfile = () => {
+const UserProfile = ({ loggedInUser }) => {
   const { username } = useParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -15,6 +18,7 @@ const UserProfile = () => {
         const response = await axios.get(`http://localhost:3001/users/${username}`);
         setUser(response.data);
         setLoading(false);
+      // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setError('Error fetching user data');
         setLoading(false);
@@ -37,6 +41,11 @@ const UserProfile = () => {
       <div className="profile-header">
         <img src={user.profilePicture} alt={`${user.username}'s profile`} className="profile-image" />
         <h2 className="username">{user.username}</h2>
+        {loggedInUser && loggedInUser.username === username && (
+          <button onClick={() => navigate('/user-settings')} className="btn btn-primary">
+            Go to Settings
+          </button>
+        )}
       </div>
       <div className="profile-stats">
         <div className="stat">
@@ -62,6 +71,10 @@ const UserProfile = () => {
       </div>
     </div>
   );
+};
+
+UserProfile.propTypes = {
+  loggedInUser: PropTypes.object,
 };
 
 export default UserProfile;

@@ -1,7 +1,8 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import Navbar from './components/Header/Navbar';
+import Header from './components/Header/Navbar';
 import FeedPage from './components/Feed/FeedPage';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
@@ -36,14 +37,14 @@ function App() {
 
   return (
     <div className='main-content'>
-      <Navbar user={user} onLogout={handleLogout} />
+      <Header user={user} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<FeedPage />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/add-post" element={<AddPost />} />
         <Route path="/users" element={<UserListPage />} />
-        <Route path="/user-profile/:username" element={<UserProfile />} />
+        <Route path="/user-profile/:username" element={<UserProfile loggedInUser={user} />} />
         <Route path="/user-settings" element={user ? <UserSettings user={user} /> : <Navigate to="/login" />} />
       </Routes>
       {loginMessage && <div className="alert alert-warning">{loginMessage}</div>}
