@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -9,45 +9,58 @@ const UserSettings = ({ user }) => {
   const [username, setUsername] = useState(user.username);
   const [bio, setBio] = useState(user.bio || '');
   const [profilePicture, setProfilePicture] = useState(user.profilePicture || '');
+  const [connectionsCount, setConnectionsCount] = useState(user.connectionsCount || 0);
+  const [connectionsUsernames, setConnectionsUsernames] = useState(user.connectionsUsernames || []);
+  const [postsCount, setPostsCount] = useState(user.postsCount || 0);
+  const [posts, setPosts] = useState(user.posts || []);
+  const [error, setError] = useState('');
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      // eslint-disable-next-line no-unused-vars
       const response = await axios.put(`http://localhost:3001/users/${user._id}`, {
         email,
         username,
         bio,
-        profilePicture
+        profilePicture,
+        connectionsCount,
+        connectionsUsernames,
+        postsCount,
+        posts
       });
-      alert('Profile updated successfully');
+      console.log('User updated:', response.data);
     } catch (err) {
-      console.error(err);
-      alert('Error updating profile');
+      if (err.response && err.response.status === 400) {
+        setError('Email or username already exists');
+      } else {
+        setError('Error updating user');
+      }
+      console.error('Error updating user:', err);
     }
   };
 
   return (
-    <div className="container user-settings">
-      <h2 className="text-center my-4">User Settings</h2>
+    <div className="user-settings">
+      <h2>User Settings</h2>
+      {error && <p className="error">{error}</p>}
       <form onSubmit={handleUpdate}>
-        <div className="form-group mb-3">
+        <div className="form-group">
           <label>Email</label>
-          <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
-        <div className="form-group mb-3">
+        <div className="form-group">
           <label>Username</label>
-          <input type="text" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)} required />
+          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
         </div>
-        <div className="form-group mb-3">
+        <div className="form-group">
           <label>Bio</label>
-          <textarea className="form-control" value={bio} onChange={(e) => setBio(e.target.value)} />
+          <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
         </div>
-        <div className="form-group mb-3">
-          <label>Profile Picture URL</label>
-          <input type="text" className="form-control" value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} />
+        <div className="form-group">
+          <label>Profile Picture</label>
+          <input type="text" value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} />
         </div>
-        <button type="submit" className="btn btn-primary w-100">Update Profile</button>
+        <button type="submit">Update</button>
       </form>
     </div>
   );
@@ -59,6 +72,17 @@ UserSettings.propTypes = {
     username: PropTypes.string.isRequired,
     bio: PropTypes.string,
     profilePicture: PropTypes.string,
+    connectionsCount: PropTypes.number,
+    connectionsUsernames: PropTypes.arrayOf(PropTypes.string),
+    postsCount: PropTypes.number,
+    posts: PropTypes.arrayOf(PropTypes.shape({
+      image: PropTypes.string,
+      likes: PropTypes.number,
+      comments: PropTypes.arrayOf(PropTypes.shape({
+        user: PropTypes.string,
+        comment: PropTypes.string
+      }))
+    })),
     _id: PropTypes.string.isRequired
   }).isRequired
 };

@@ -21,18 +21,18 @@ app.post('/login', async (req, res) => {
             if (user && user.password === password) {
                 res.json(user);
             } else {
-                res.json({ message: 'Invalid credentials' });
+                res.status(401).json({ message: 'Invalid credentials' });
             }
         })
-        .catch(err => res.json({ message: 'User not found' }));
+        .catch(err => res.status(500).json({ message: 'User not found' }));
 });
 
 app.post('/register', async (req, res) => {
     const { email, username, password } = req.body;
     try {
-        const existingUser = await UserModel.findOne({ email: email });
+        const existingUser = await UserModel.findOne({ $or: [{ email: email }, { username: username }] });
         if (existingUser) {
-            return res.status(400).json({ message: 'Account already exists. Please login.' });
+            return res.status(400).json({ message: 'Email or username already exists' });
         }
         const newUser = await UserModel.create({ email, username, password });
         res.status(201).json({ message: 'Account created successfully', user: newUser });
@@ -43,10 +43,14 @@ app.post('/register', async (req, res) => {
 
 app.put('/users/:id', async (req, res) => {
     const { id } = req.params;
-    const { email, username, bio, profilePicture } = req.body;
+    const { email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts } = req.body;
     try {
-        const updatedUser = await UserModel.findByIdAndUpdate(id, { email, username, bio, profilePicture }, { new: true });
-        res.json({ message: 'Profile updated successfully', user: updatedUser });
+        const existingUser = await UserModel.findOne({ $or: [{ email: email }, { username: username }], _id: { $ne: id } });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email or username already exists' });
+        }
+        const updatedUser = await UserModel.findByIdAndUpdate(id, { email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts }, { new: true });
+        res.json(updatedUser);
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err });
     }
