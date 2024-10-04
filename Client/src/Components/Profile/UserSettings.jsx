@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import Overlay from '../Overlay/Overlay';
 import './UserSettings.css';
 
 const UserSettings = ({ user }) => {
@@ -14,6 +15,7 @@ const UserSettings = ({ user }) => {
   const [postsCount, setPostsCount] = useState(user.postsCount || 0);
   const [posts, setPosts] = useState(user.posts || []);
   const [error, setError] = useState('');
+  const [overlayMessage, setOverlayMessage] = useState('');
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -28,21 +30,29 @@ const UserSettings = ({ user }) => {
         postsCount,
         posts
       });
+      setOverlayMessage('User updated successfully');
       console.log('User updated:', response.data);
     } catch (err) {
       if (err.response && err.response.status === 400) {
         setError('Email or username already exists');
+        setOverlayMessage('Email or username already exists');
       } else {
         setError('Error updating user');
+        setOverlayMessage('Error updating user');
       }
       console.error('Error updating user:', err);
     }
+  };
+
+  const closeOverlay = () => {
+    setOverlayMessage('');
   };
 
   return (
     <div className="user-settings">
       <h2>User Settings</h2>
       {error && <p className="error">{error}</p>}
+      {overlayMessage && <Overlay message={overlayMessage} onClose={closeOverlay} />}
       <form onSubmit={handleUpdate}>
         <div className="form-group">
           <label>Email</label>
