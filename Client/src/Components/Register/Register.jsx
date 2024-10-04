@@ -1,8 +1,8 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import Overlay from '../Overlay/Overlay';
 import './Register.css';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -10,6 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [overlayMessage, setOverlayMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +21,9 @@ const Register = () => {
     try {
       const response = await axios.post('http://localhost:3001/register', { email, username, password });
       setOverlayMessage(response.data.message);
+      setTimeout(() => {
+        navigate('/login'); // Redirect to Login page after registration
+      }, 2000);
     } catch (err) {
       console.error(err);
       setOverlayMessage('An error occurred during registration');

@@ -19,7 +19,7 @@ app.post('/login', async (req, res) => {
     try {
         const user = await UserModel.findOne({ email: email });
         if (user && user.password === password) {
-            res.json({ user, message: 'Login successful' });
+            res.status(200).json({ user, message: 'Login successful' });
         } else {
             res.status(401).json({ message: 'Invalid credentials' });
         }
@@ -46,12 +46,24 @@ app.put('/users/:id', async (req, res) => {
     const { id } = req.params;
     const { email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts } = req.body;
     try {
-        const existingUser = await UserModel.findOne({ $or: [{ email: email }, { username: username }], _id: { $ne: id } });
-        if (existingUser) {
-            return res.status(400).json({ message: 'Email or username already exists' });
+        const updatedUser = await UserModel.findByIdAndUpdate(id, {
+            email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts
+        }, { new: true });
+        res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err });
+    }
+});
+
+app.get('/users/:username', async (req, res) => {
+    const { username } = req.params;
+    try {
+        const user = await UserModel.findOne({ username: username });
+        if (user) {
+            res.status(200).json(user);
+        } else {
+            res.status(404).json({ message: 'User not found' });
         }
-        const updatedUser = await UserModel.findByIdAndUpdate(id, { email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts }, { new: true });
-        res.json({ user: updatedUser, message: 'User updated successfully' });
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err });
     }
