@@ -69,6 +69,16 @@ app.get('/users/:username', async (req, res) => {
     }
 });
 
+app.get('/users', async (req, res) => {
+    try {
+      const users = await UserModel.find();
+      res.json(users);
+    } catch (err) {
+      res.status(500).json({ message: 'Error fetching users' });
+    }
+  });
+  
+
 app.listen(3001, () => {
     console.log('Server is running on port 3001');
 });

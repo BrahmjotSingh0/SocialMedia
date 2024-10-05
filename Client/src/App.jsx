@@ -7,7 +7,7 @@ import FeedPage from './components/Feed/FeedPage';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import AddPost from './components/AddPost/AddPost';
-import UserListPage from './components/user/UserListPage';
+import UserListPage from './Components/user/UserListPage';
 import UserProfile from './components/Profile/UserProfile';
 import UserSettings from './components/Profile/UserSettings';
 import './App.css';

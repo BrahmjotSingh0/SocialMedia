@@ -1,43 +1,49 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import UserComponent from './UserComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-const users = [
-  {
-    username: 'user1',
-    posts: 10,
-    profile: 'https://randomuser.me/api/portraits/men/70.jpg',
-    followers: 100,
-    following: 50
-  },
-  {
-    username: 'user2',
-    posts: 20,
-    profile: 'https://randomuser.me/api/portraits/men/33.jpg',
-    followers: 200,
-    following: 150
-  },
-  {
-    username: 'user3',
-    posts: 30,
-    profile: 'https://randomuser.me/api/portraits/men/82.jpg',
-    followers: 300,
-    following: 250
-  }
-];
+import './UserListPage.css';
 
 function UserListPage() {
+  const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/users');
+        setUsers(response.data);
+      } catch (err) {
+        console.error('Error fetching users:', err);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  const filteredUsers = users.filter(user =>
+    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="container">
+    <div className="container user-list-page">
       <h1 className='page-name'>User List Page</h1>
+      <input
+        type="text"
+        placeholder="Search by username"
+        className="search-bar"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
       <div className="row">
-        {users.map((user, index) => (
+        {filteredUsers.map((user, index) => (
           <div className="col-md-6" key={index}>
             <UserComponent
               username={user.username}
-              posts={user.posts}
-              profile={user.profile}
-              followers={user.followers}
-              following={user.following}
+              posts={user.postsCount}
+              profile={user.profilePicture}
+              followers={user.connectionsCount}
+              following={user.connectionsUsernames.length}
             />
           </div>
         ))}
