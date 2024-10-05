@@ -3,6 +3,7 @@ import axios from 'axios';
 import Overlay from '../Overlay/Overlay';
 import './Register.css';
 import { useNavigate } from 'react-router-dom';
+import urlconfig from '../../urlconfig';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -19,7 +20,7 @@ const Register = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:3001/register', { email, username, password });
+      const response = await axios.post(`${urlconfig.API_URL}/register`, { email, username, password });
       setOverlayMessage(response.data.message);
       setTimeout(() => {
         navigate('/login'); // Redirect to Login page after registration

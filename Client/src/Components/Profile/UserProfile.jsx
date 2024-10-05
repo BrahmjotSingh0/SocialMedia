@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './UserProfile.css';
+import urlconfig from '../../urlconfig';
 
 const UserProfile = ({ loggedInUser }) => {
   const { username } = useParams();
@@ -15,7 +16,7 @@ const UserProfile = ({ loggedInUser }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/users/${username}`);
+        const response = await axios.get(`${urlconfig.API_URL}/users/${username}`);
         setUser(response.data);
         setLoading(false);
       // eslint-disable-next-line no-unused-vars

@@ -3,6 +3,7 @@ import axios from 'axios';
 import UserComponent from './UserComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './UserListPage.css';
+import urlconfig from '../../urlconfig';
 
 function UserListPage() {
   const [users, setUsers] = useState([]);
@@ -11,7 +12,7 @@ function UserListPage() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/users');
+        const response = await axios.get(`${urlconfig.API_URL}/users`);
         setUsers(response.data);
       } catch (err) {
         console.error('Error fetching users:', err);

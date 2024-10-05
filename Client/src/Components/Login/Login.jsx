@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import Overlay from '../Overlay/Overlay';
 import './Login.css';
+import urlconfig from '../../urlconfig';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ const Login = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/login', { email, password });
+      const response = await axios.post(`${urlconfig.API_URL}/login`, { email, password });
       if (response.data.user) {
         onLogin(response.data.user);
         setOverlayMessage(response.data.message);

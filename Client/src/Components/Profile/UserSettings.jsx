@@ -4,6 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Overlay from '../Overlay/Overlay';
 import './UserSettings.css';
+import urlconfig from '../../urlconfig';
 
 const UserSettings = ({ user }) => {
   const [email, setEmail] = useState(user.email);
@@ -20,7 +21,7 @@ const UserSettings = ({ user }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:3001/users/${user._id}`, {
+      const response = await axios.put(`${urlconfig.API_URL}/users/${user._id}`, {
         email,
         username,
         bio,
