@@ -2,14 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import Header from './components/Header/Navbar';
-import FeedPage from './components/Feed/FeedPage';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
-import AddPost from './components/AddPost/AddPost';
+import Header from './Components/Header/Navbar';
+import FeedPage from './Components/Feed/FeedPage';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
+import AddPost from './Components/AddPost/AddPost';
 import UserListPage from './Components/user/UserListPage';
-import UserProfile from './components/Profile/UserProfile';
-import UserSettings from './components/Profile/UserSettings';
+import UserProfile from './Components/Profile/UserProfile';
+import UserSettings from './Components/Profile/UserSettings';
 import './App.css';
 
 function App() {

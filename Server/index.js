@@ -2,15 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const UserModel = require('./models/UserModel');
+require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
 
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:5173' // Replace with your frontend's origin
+    origin: process.env.FRONTEND_ORIGIN // Use environment variable for frontend origin
 }));
 
-mongoose.connect('mongodb://127.0.0.1:27017/users')
+mongoose.connect(process.env.MONGODB_URI) // Use environment variable for MongoDB URI
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
