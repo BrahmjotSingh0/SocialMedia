@@ -4,13 +4,14 @@ const cors = require('cors');
 const UserModel = require('./models/UserModel');
 
 const app = express();
+const Port = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(cors({
     origin: 'http://localhost:5173',
 }));
 
-mongoose.connect('mongodb://localhost:27017/users') 
+mongoose.connect('mongodb+srv://brahmjots111:kYOqvpLzdifdJdIQ@cluster0.vptpd.mongodb.net/users') 
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
@@ -79,6 +80,6 @@ app.get('/users', async (req, res) => {
   });
   
 
-app.listen(3001, () => {
-    console.log('Server is running on port 3001');
+app.listen(Port, () => {
+    console.log('Server is running on port {Port}');
 });
