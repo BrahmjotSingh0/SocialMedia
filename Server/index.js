@@ -81,5 +81,5 @@ app.get('/users', async (req, res) => {
   
 
 app.listen(Port, () => {
-    console.log('Server is running on port {Port}');
+    console.log('Server is running on port', Port);
 });
