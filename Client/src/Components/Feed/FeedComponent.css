@@ -28,6 +28,15 @@
   color: #007bff;
 }
 
+.post-date {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 700;
+  text-align: right;
+  margin-right: 0.6rem;
+}
+
+
 .post-image-feed-page {
   width: 100% !important; 
   height: auto;

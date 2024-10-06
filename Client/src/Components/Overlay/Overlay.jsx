@@ -5,7 +5,7 @@ const Overlay = ({ message, onClose }) => {
   return (
     <div className="overlay">
       <div className="overlay-content">
-        <p>{message}</p>
+        {typeof message === 'string' ? <p>{message}</p> : message}
         <button onClick={onClose}>Close</button>
       </div>
     </div>
@@ -13,7 +13,7 @@ const Overlay = ({ message, onClose }) => {
 };
 
 Overlay.propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   onClose: PropTypes.func.isRequired
 };
 

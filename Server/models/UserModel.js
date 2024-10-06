@@ -20,7 +20,11 @@ const PostSchema = new mongoose.Schema({
   comments: [{
     user: String,
     comment: String
-  }]
+  }],
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 const UserSchema = new mongoose.Schema({
@@ -44,7 +48,7 @@ const UserSchema = new mongoose.Schema({
   },
   profilePicture: {
     type: String,
-    default: ''
+    default: 'https://avatar.iran.liara.run/public/47'
   },
   connectionsCount: {
     type: Number,

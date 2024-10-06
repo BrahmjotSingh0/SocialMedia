@@ -5,12 +5,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './UserProfile.css';
 import urlconfig from '../../urlconfig';
+import Overlay from '../Overlay/Overlay';
 
 const UserProfile = ({ loggedInUser }) => {
   const { username } = useParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [showOverlay, setShowOverlay] = useState(false); 
+  const [selectedPost, setSelectedPost] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +30,16 @@ const UserProfile = ({ loggedInUser }) => {
 
     fetchUserData();
   }, [username]);
+
+  const handlePostClick = (post) => {
+    setSelectedPost(post);
+    setShowOverlay(true);
+  };
+
+  const handleCloseOverlay = () => {
+    setShowOverlay(false);
+    setSelectedPost(null);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -72,11 +85,12 @@ const UserProfile = ({ loggedInUser }) => {
       <div className="posts-grid">
         {user.posts.length > 0 ? (
           user.posts.map((post, index) => (
-            <div key={index} className="post-item">
+            <div key={index} className="post-item" onClick={() => handlePostClick(post)}>
               <img src={post.image} alt={`Post ${index + 1}`} className="post-image" />
               <div className="post-content">
                 <h3 className="post-title">{post.title}</h3>
                 <p className="post-caption">{post.caption}</p>
+                <p className="post-date">Posted at: {new Date(post.createdAt).toLocaleString()}</p>
               </div>
               <div className="post-stats">
                 <span>{post.likes} likes</span>
@@ -93,6 +107,9 @@ const UserProfile = ({ loggedInUser }) => {
           <p>No posts available</p>
         )}
       </div>
+      {showOverlay && selectedPost && (
+        <Overlay message={<img src={selectedPost.image} alt="Selected Post" />} onClose={handleCloseOverlay} />
+      )}
     </div>
   );
 };

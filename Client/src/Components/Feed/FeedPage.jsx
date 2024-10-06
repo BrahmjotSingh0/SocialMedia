@@ -34,6 +34,7 @@ const FeedPage = () => {
                 postImage={post.image}
                 likes={post.likes}
                 comments={post.comments.length}
+                createdAt={post.createdAt}
               />
             </div>
           ))
