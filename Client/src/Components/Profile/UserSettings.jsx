@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Overlay from '../Overlay/Overlay';
@@ -18,6 +18,27 @@ const UserSettings = ({ user }) => {
   const [error, setError] = useState('');
   const [overlayMessage, setOverlayMessage] = useState('');
 
+  useEffect(() => {
+    const fetchLatestUserData = async () => {
+      try {
+        const response = await axios.get(`${urlconfig.API_URL}/users/${user.username}`);
+        const latestUser = response.data;
+        setEmail(latestUser.email);
+        setUsername(latestUser.username);
+        setBio(latestUser.bio || '');
+        setProfilePicture(latestUser.profilePicture || '');
+        setConnectionsCount(latestUser.connectionsCount || 0);
+        setConnectionsUsernames(latestUser.connectionsUsernames || []);
+        setPostsCount(latestUser.postsCount || 0);
+        setPosts(latestUser.posts || []);
+      } catch (err) {
+        console.error('Error fetching latest user data:', err);
+      }
+    };
+
+    fetchLatestUserData();
+  }, [user.username]);
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -25,21 +46,32 @@ const UserSettings = ({ user }) => {
       const response = await axios.get(`${urlconfig.API_URL}/users/${user.username}`);
       const latestUser = response.data;
 
-      
+      // Merge the latest user data with the updated fields
       const updatedUser = {
+        ...latestUser,
         email,
         username,
         bio,
         profilePicture,
         connectionsCount,
         connectionsUsernames,
-        postsCount: latestUser.postsCount, 
-        posts: latestUser.posts 
+        postsCount: latestUser.postsCount, // Ensure the latest postsCount is used
+        posts: latestUser.posts // Ensure the latest posts are used
       };
 
       const updateResponse = await axios.put(`${urlconfig.API_URL}/users/${user._id}`, updatedUser);
       setOverlayMessage('User updated successfully');
       console.log('User updated:', updateResponse.data);
+
+      // Update state with the latest user data
+      setEmail(updateResponse.data.email);
+      setUsername(updateResponse.data.username);
+      setBio(updateResponse.data.bio || '');
+      setProfilePicture(updateResponse.data.profilePicture || '');
+      setConnectionsCount(updateResponse.data.connectionsCount || 0);
+      setConnectionsUsernames(updateResponse.data.connectionsUsernames || []);
+      setPostsCount(updateResponse.data.postsCount || 0);
+      setPosts(updateResponse.data.posts || []);
     } catch (err) {
       if (err.response && err.response.status === 400) {
         setError('Email or username already exists');
