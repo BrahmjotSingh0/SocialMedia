@@ -117,7 +117,13 @@ app.post('/posts', async (req, res) => {
 app.get('/posts', async (req, res) => {
     try {
         const users = await UserModel.find();
-        const posts = users.flatMap(user => user.posts);
+        const posts = users.flatMap(user => 
+            user.posts.map(post => ({
+                ...post.toObject(),
+                username: user.username,
+                userImage: user.profilePicture
+            }))
+        );
         res.status(200).json(posts);
     } catch (err) {
         console.error('Error fetching posts:', err);
