@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -19,7 +19,6 @@ const UserProfile = ({ loggedInUser }) => {
         const response = await axios.get(`${urlconfig.API_URL}/users/${username}`);
         setUser(response.data);
         setLoading(false);
-      // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setError('Error fetching user data');
         setLoading(false);
@@ -61,14 +60,26 @@ const UserProfile = ({ loggedInUser }) => {
         <p>{user.bio}</p>
       </div>
       {loggedInUser && loggedInUser.username === username && (
-        <button onClick={() => navigate('/user-settings')} className="btn btn-primary">
-          Settings
-        </button>
+        <div className="profile-actions">
+          <button onClick={() => navigate('/add-post')} className="btn btn-primary">
+            Add Post
+          </button>
+          <button onClick={() => navigate('/user-settings')} className="btn btn-secondary">
+            Settings
+          </button>
+        </div>
       )}
       <div className="posts-grid">
-        {user.posts.map((post, index) => (
-          <img key={index} src={`https://picsum.photos/200/200?random=${index}`} alt={`Post ${index + 1}`} className="post-image" />
-        ))}
+        {user.posts.length > 0 ? (
+          user.posts.map((post, index) => (
+            <div key={index} className="post-item">
+              <img src={post.image} alt={`Post ${index + 1}`} className="post-image" />
+              <p className="post-caption">{post.caption}</p>
+            </div>
+          ))
+        ) : (
+          <p>No posts available</p>
+        )}
       </div>
     </div>
   );

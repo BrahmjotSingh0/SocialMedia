@@ -96,6 +96,43 @@ app.get('/users', async (req, res) => {
     }
 });
 
+app.post('/posts', async (req, res) => {
+    const { title, caption, imageUrl, userId } = req.body;
+    try {
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        const newPost = {
+            image: imageUrl,
+            likes: 0,
+            comments: [],
+            title,
+            caption,
+        };
+        user.posts.push(newPost);
+        user.postsCount += 1;
+        await user.save();
+        res.status(201).send('Post added');
+    } catch (err) {
+        res.status(500).send('Error adding post');
+    }
+});
+
+app.get('/posts', async (req, res) => {
+    try {
+        const users = await UserModel.find();
+        const posts = users.flatMap(user => user.posts.map(post => ({
+            ...post.toObject(),
+            username: user.username,
+            userImage: user.profilePicture,
+        })));
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).send('Error fetching posts');
+    }
+});
+
 app.listen(Port, () => {
     console.log(`Server is running on port ${Port}`);
 });
