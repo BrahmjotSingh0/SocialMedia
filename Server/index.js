@@ -11,7 +11,7 @@ const Port = process.env.PORT || 3001;
 
 app.use(express.json());
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost:5173'];
+const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost:5173', 'https://postitup.netlify.app'];
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -34,7 +34,7 @@ app.post('/login', async (req, res) => {
     try {
         const user = await UserModel.findOne({ email: email });
         if (user && user.password === password) {
-            res.status(200).json({ user, message: 'Login successful' });
+            res.status(200).json({ message: 'Login successful', user });
         } else {
             res.status(401).json({ message: 'Invalid credentials' });
         }
@@ -49,7 +49,7 @@ app.post('/register', async (req, res) => {
     try {
         const existingUser = await UserModel.findOne({ $or: [{ email: email }, { username: username }] });
         if (existingUser) {
-            return res.status(400).json({ message: 'Email or username already exists' });
+            return res.status(409).json({ message: 'Email or username already exists' });
         }
         const newUser = await UserModel.create({ email, username, password });
         res.status(201).json({ message: 'Account created successfully', user: newUser });
@@ -63,12 +63,10 @@ app.put('/users/:id', async (req, res) => {
     const { id } = req.params;
     const { email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts } = req.body;
     try {
-        const updatedUser = await UserModel.findByIdAndUpdate(id, {
-            email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts
-        }, { new: true });
+        const updatedUser = await UserModel.findByIdAndUpdate(id, { email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts }, { new: true });
         res.status(200).json({ message: 'User updated successfully', user: updatedUser });
     } catch (err) {
-        console.error('Error during user update:', err);
+        console.error('Error updating user:', err);
         res.status(500).json({ message: 'Server error' });
     }
 });
@@ -78,12 +76,12 @@ app.get('/users/:username', async (req, res) => {
     try {
         const user = await UserModel.findOne({ username: username });
         if (user) {
-            res.json(user);
+            res.status(200).json(user);
         } else {
             res.status(404).json({ message: 'User not found' });
         }
     } catch (err) {
-        console.error('Error fetching user data:', err);
+        console.error('Error fetching user:', err);
         res.status(500).json({ message: 'Server error' });
     }
 });
@@ -91,7 +89,7 @@ app.get('/users/:username', async (req, res) => {
 app.get('/users', async (req, res) => {
     try {
         const users = await UserModel.find();
-        res.json(users);
+        res.status(200).json(users);
     } catch (err) {
         console.error('Error fetching users:', err);
         res.status(500).json({ message: 'Server error' });
@@ -99,42 +97,32 @@ app.get('/users', async (req, res) => {
 });
 
 app.post('/posts', async (req, res) => {
-  const { title, caption, imageUrl, userId } = req.body;
-  try {
-    const user = await UserModel.findById(userId);
-    if (!user) {
-      return res.status(404).send('User not found');
+    const { title, caption, imageUrl, userId } = req.body;
+    try {
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const newPost = { title, caption, image: imageUrl };
+        user.posts.push(newPost);
+        user.postsCount += 1;
+        await user.save();
+        res.status(201).json({ message: 'Post created successfully', post: newPost });
+    } catch (err) {
+        console.error('Error creating post:', err);
+        res.status(500).json({ message: 'Server error' });
     }
-    const newPost = {
-      image: imageUrl,
-      likes: 0,
-      comments: [],
-      title,
-      caption,
-      createdAt: new Date()
-    };
-    user.posts.push(newPost);
-    user.postsCount += 1;
-    await user.save();
-    res.status(201).send('Post added');
-  } catch (err) {
-    res.status(500).send('Error adding post');
-  }
 });
 
 app.get('/posts', async (req, res) => {
-  try {
-    const users = await UserModel.find();
-    const posts = users.flatMap(user => user.posts.map(post => ({
-      ...post.toObject(),
-      username: user.username,
-      userImage: user.profilePicture,
-    })));
-    posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Sort posts by date
-    res.status(200).json(posts);
-  } catch (err) {
-    res.status(500).send('Error fetching posts');
-  }
+    try {
+        const users = await UserModel.find();
+        const posts = users.flatMap(user => user.posts);
+        res.status(200).json(posts);
+    } catch (err) {
+        console.error('Error fetching posts:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
 app.listen(Port, () => {
