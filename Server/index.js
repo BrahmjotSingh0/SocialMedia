@@ -10,8 +10,17 @@ const app = express();
 const Port = process.env.PORT || 3001;
 
 app.use(express.json());
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost:5173'];
+
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
 }));
 
 mongoose.connect(process.env.MONGODB_URI)
