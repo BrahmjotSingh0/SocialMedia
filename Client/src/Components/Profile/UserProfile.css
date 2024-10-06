@@ -48,6 +48,7 @@
 
 .stat-label {
   color: #777;
+  margin-left: 5px;
 }
 
 .bio {
@@ -64,16 +65,67 @@
 }
 
 .posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 2rem;
+}
+
+.post-item {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
 }
 
 .post-image {
-  width: calc(33.333% - 10px);
+  width: 100%;
   height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+.post-content {
+  padding: 10px;
+}
+
+.post-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.post-caption {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.post-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.post-stats span {
+  font-weight: bold;
+  color: #555;
+}
+
+.comment-box {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.comment-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 10px;
 }
 
 @media (max-width: 768px) {
@@ -87,16 +139,12 @@
   }
 
   .posts-grid {
-    gap: 5px;
-  }
-
-  .post-image {
-    width: calc(50% - 5px);
+    gap: 10px;
   }
 }
 
 @media (max-width: 480px) {
-  .post-image {
-    width: 100%;
+  .posts-grid {
+    grid-template-columns: 1fr;
   }
 }

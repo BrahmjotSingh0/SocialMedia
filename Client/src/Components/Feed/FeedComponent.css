@@ -4,7 +4,7 @@
   margin-bottom: 20px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Ensure content stays within the component */
+  overflow: hidden;
 }
 
 .feed-header {
@@ -28,11 +28,13 @@
   color: #007bff;
 }
 
-.post-image {
-  width: 100%;
+.post-image-feed-page {
+  width: 100% !important; 
   height: auto;
-  max-width: 100%; /* Ensure the image does not exceed the container width */
-  display: block; /* Ensure the image is treated as a block element */
+  display: block;
+  object-fit: cover; 
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .feed-actions {

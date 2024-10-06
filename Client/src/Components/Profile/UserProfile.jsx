@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -74,7 +73,19 @@ const UserProfile = ({ loggedInUser }) => {
           user.posts.map((post, index) => (
             <div key={index} className="post-item">
               <img src={post.image} alt={`Post ${index + 1}`} className="post-image" />
-              <p className="post-caption">{post.caption}</p>
+              <div className="post-content">
+                <h3 className="post-title">{post.title}</h3>
+                <p className="post-caption">{post.caption}</p>
+              </div>
+              <div className="post-stats">
+                <span>{post.likes} likes</span>
+                <span>{post.comments.length} comments</span>
+              </div>
+              {loggedInUser && loggedInUser.username !== username && (
+                <div className="comment-box">
+                  <input type="text" placeholder="Add a comment..." className="comment-input" />
+                </div>
+              )}
             </div>
           ))
         ) : (

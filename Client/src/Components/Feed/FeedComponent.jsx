@@ -10,7 +10,7 @@ const FeedComponent = ({ username, userImage, postImage, likes, comments }) => {
         <img src={userImage} alt={`${username}'s profile`} className="user-image" />
         <span className="username">{username}</span>
       </div>
-      <img src={postImage} alt="User post" className="post-image" />
+      <img src={postImage} alt="User post" className="post-image-feed-page" />
       <div className="feed-actions">
         <span className="likes">{likes} likes</span>
         <span className="comments">{comments} comments</span>
