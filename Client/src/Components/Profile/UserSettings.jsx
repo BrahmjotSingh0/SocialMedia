@@ -21,18 +21,25 @@ const UserSettings = ({ user }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`${urlconfig.API_URL}/users/${user._id}`, {
+      // Fetch the latest user data
+      const response = await axios.get(`${urlconfig.API_URL}/users/${user.username}`);
+      const latestUser = response.data;
+
+      
+      const updatedUser = {
         email,
         username,
         bio,
         profilePicture,
         connectionsCount,
         connectionsUsernames,
-        postsCount,
-        posts
-      });
+        postsCount: latestUser.postsCount, 
+        posts: latestUser.posts 
+      };
+
+      const updateResponse = await axios.put(`${urlconfig.API_URL}/users/${user._id}`, updatedUser);
       setOverlayMessage('User updated successfully');
-      console.log('User updated:', response.data);
+      console.log('User updated:', updateResponse.data);
     } catch (err) {
       if (err.response && err.response.status === 400) {
         setError('Email or username already exists');
