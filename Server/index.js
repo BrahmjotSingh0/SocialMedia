@@ -2,18 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const UserModel = require('./models/UserModel');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 const Port = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
 }));
 
-mongoose.connect('mongodb+srv://brahmjots111:kYOqvpLzdifdJdIQ@cluster0.vptpd.mongodb.net/users') 
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+    .catch(err => console.error('MongoDB connection error:', err));
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
@@ -25,7 +28,8 @@ app.post('/login', async (req, res) => {
             res.status(401).json({ message: 'Invalid credentials' });
         }
     } catch (err) {
-        res.status(500).json({ message: 'User not found' });
+        console.error('Error during login:', err);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
@@ -39,7 +43,8 @@ app.post('/register', async (req, res) => {
         const newUser = await UserModel.create({ email, username, password });
         res.status(201).json({ message: 'Account created successfully', user: newUser });
     } catch (err) {
-        res.status(500).json({ message: 'Server error', error: err });
+        console.error('Error during registration:', err);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
@@ -52,7 +57,8 @@ app.put('/users/:id', async (req, res) => {
         }, { new: true });
         res.status(200).json({ message: 'User updated successfully', user: updatedUser });
     } catch (err) {
-        res.status(500).json({ message: 'Server error', error: err });
+        console.error('Error during user update:', err);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
@@ -66,20 +72,21 @@ app.get('/users/:username', async (req, res) => {
             res.status(404).json({ message: 'User not found' });
         }
     } catch (err) {
-        res.status(500).json({ message: 'An error occurred while fetching user data' });
+        console.error('Error fetching user data:', err);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
 app.get('/users', async (req, res) => {
     try {
-      const users = await UserModel.find();
-      res.json(users);
+        const users = await UserModel.find();
+        res.json(users);
     } catch (err) {
-      res.status(500).json({ message: 'Error fetching users' });
+        console.error('Error fetching users:', err);
+        res.status(500).json({ message: 'Server error' });
     }
-  });
-  
+});
 
 app.listen(Port, () => {
-    console.log('Server is running on port', Port);
+    console.log(`Server is running on port ${Port}`);
 });
