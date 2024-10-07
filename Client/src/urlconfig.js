@@ -1,5 +1,5 @@
 const url = {
-    API_URL: 'http://localhost:3001'
+    API_URL: 'https://postitupbackend.onrender.com'
 };
 
 export default url;
