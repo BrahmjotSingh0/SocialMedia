@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+    text-align: center; /* Center align text */
 }
 
 form {
@@ -21,6 +22,7 @@ form {
 
 .login-header {
     display: flex;
+    flex-direction: column; /* Change to column for responsive */
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
@@ -30,7 +32,7 @@ form {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-bottom: 10px; /* Adjust margin for responsive */
 }
 
 .title-container {
@@ -109,4 +111,28 @@ input::placeholder {
 
 .register-message a:hover {
     text-decoration: underline;
+}
+
+.google-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.google-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .login-header {
+        flex-direction: column; /* Stack logo and title vertically */
+    }
+
+    .logo {
+        margin-bottom: 10px; /* Add space below logo */
+    }
 }

@@ -6,7 +6,7 @@ import Overlay from '../Overlay/Overlay';
 import './Login.css';
 import urlconfig from '../../urlconfig';
 import logo from '../../../assets/logo.png';
-
+import googleLogo from '../../../assets/google-logo.svg'; 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +31,11 @@ const Login = ({ onLogin }) => {
       console.error(err);
       setError('An error occurred during login');
     }
+  };
+
+  const handleGoogleLogin = () => {
+    // Implement Google login logic here
+    console.log('Google login clicked');
   };
 
   const closeOverlay = () => {
@@ -72,6 +77,10 @@ const Login = ({ onLogin }) => {
         <button type="submit" className="btn">Login</button>
         <p className="register-message">Don&apos;t have an account? <a href="/register">Register</a></p>
       </form>
+      <div className="google-login" onClick={handleGoogleLogin}>
+        <img src={googleLogo} alt="Google login" className="google-logo" />
+        <p>Login with Google</p>
+      </div>
     </div>
   );
 };

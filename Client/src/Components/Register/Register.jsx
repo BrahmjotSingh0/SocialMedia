@@ -5,6 +5,7 @@ import './Register.css';
 import { useNavigate } from 'react-router-dom';
 import urlconfig from '../../urlconfig';
 import logo from '../../../assets/logo.png';
+import googleLogo from '../../../assets/google-logo.svg'; // Add Google logo
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -30,6 +31,11 @@ const Register = () => {
       console.error(err);
       setOverlayMessage('An error occurred during registration');
     }
+  };
+
+  const handleGoogleLogin = () => {
+    // Implement Google login logic here
+    console.log('Google login clicked');
   };
 
   const closeOverlay = () => {
@@ -88,6 +94,10 @@ const Register = () => {
         <button type="submit" className="btn">Register</button>
         <p className="login-message">Already have an account? <a href="/login">Login</a></p>
       </form>
+      <div className="google-login" onClick={handleGoogleLogin}>
+        <img src={googleLogo} alt="Google login" className="google-logo" />
+        <p>Register with Google</p>
+      </div>
     </div>
   );
 };
