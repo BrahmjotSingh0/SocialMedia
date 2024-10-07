@@ -4,6 +4,7 @@ import Overlay from '../Overlay/Overlay';
 import './Register.css';
 import { useNavigate } from 'react-router-dom';
 import urlconfig from '../../urlconfig';
+import logo from '../../../assets/logo.png';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -37,9 +38,16 @@ const Register = () => {
 
   return (
     <div className="signup-container">
-      <h2>Register</h2>
       {overlayMessage && <Overlay message={overlayMessage} onClose={closeOverlay} />}
       <form onSubmit={handleSubmit}>
+        <div className="signup-header">
+          <img src={logo} alt="logo" className="logo" />
+          <div className="title-container">
+            <h1 className="title">PostItUp</h1>
+            <p className="welcome-message">Join PostItUp Today! 👋</p>
+            <p className="about-message">PostItUp is a social media platform where you can share your posts and connect with others.</p>
+          </div>
+        </div>
         <div className="form-group">
           <label>Email</label>
           <input
@@ -76,7 +84,9 @@ const Register = () => {
             required
           />
         </div>
+        {overlayMessage && <p className="error-message">{overlayMessage}</p>}
         <button type="submit" className="btn">Register</button>
+        <p className="login-message">Already have an account? <a href="/login">Login</a></p>
       </form>
     </div>
   );

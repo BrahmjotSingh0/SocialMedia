@@ -3,12 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     padding: 20px;
-}
-
-h2 {
-    margin-bottom: 20px;
 }
 
 form {
@@ -17,10 +12,42 @@ form {
     align-items: center;
     width: 100%;
     max-width: 400px;
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.login-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.title-container {
+    text-align: center;
+}
+
+.title {
+    font-size: 2rem;
+    color: #333;
+    font-weight: bolder;
+    font-family: 'Bungee Spice', cursive;
+}
+
+.welcome-message, .about-message, .welcome-back-message {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #555;
 }
 
 .form-group {
@@ -31,7 +58,7 @@ form {
 label {
     display: block;
     margin-bottom: 5px;
-    color: black;
+    color: #333;
 }
 
 input {
@@ -39,6 +66,12 @@ input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+}
+
+input::placeholder {
+    color: #999;
 }
 
 .btn {
@@ -51,14 +84,29 @@ input {
     color: white;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .btn:hover {
     background-color: #0056b3;
 }
 
-p {
+.error-message {
     color: red;
     margin: 0;
     margin-top: 5px;
+}
+
+.register-message {
+    margin-top: 10px;
+    color: #555;
+}
+
+.register-message a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.register-message a:hover {
+    text-decoration: underline;
 }

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Overlay from '../Overlay/Overlay';
 import './Login.css';
 import urlconfig from '../../urlconfig';
+import logo from '../../../assets/logo.png';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -38,9 +39,17 @@ const Login = ({ onLogin }) => {
 
   return (
     <div className="signin-container">
-      <h2>Login</h2>
       {overlayMessage && <Overlay message={overlayMessage} onClose={closeOverlay} />}
       <form onSubmit={handleSubmit}>
+        <div className="login-header">
+          <img src={logo} alt="logo" className="logo" />
+          <div className="title-container">
+            <h1 className="title">PostItUp</h1>
+            <p className="welcome-message">Welcome to PostItUp App! 👋</p>
+            <p className="about-message">PostItUp is a social media platform where you can share your posts and connect with others.</p>
+            <p className="welcome-back-message">Welcome back user! Please login to continue.</p>
+          </div>
+        </div>
         <div className="form-group">
           <label>Email</label>
           <input
@@ -59,8 +68,9 @@ const Login = ({ onLogin }) => {
             required
           />
         </div>
-        {error && <p>{error}</p>}
+        {error && <p className="error-message">{error}</p>}
         <button type="submit" className="btn">Login</button>
+        <p className="register-message">Don&apos;t have an account? <a href="/register">Register</a></p>
       </form>
     </div>
   );

@@ -1,10 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
+
 .custom-navbar {
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
 }
 
 .logo {
   height: 40px;
+  margin-right: 10px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  font-family: 'Bungee Spice', cursive;
+  font-size: 2.5rem !important;
+  color: #fff;
+}
+
+.navbar-brand:hover {
+  color: #fff;
+  text-decoration: none;
 }
 
 .nav-link {
@@ -12,12 +29,29 @@
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
+  color: #000000;
 }
 
 .nav-link svg {
-  color: #000;
+  color: #000000;
 }
 
 .nav-link:hover svg {
-  color: #007bff;
+  color: #ddd;
+}
+
+.nav-link:hover {
+  color: #ddd;
+}
+
+.navbar-collapse {
+  justify-content: space-between;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }

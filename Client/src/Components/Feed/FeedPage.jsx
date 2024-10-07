@@ -4,6 +4,7 @@ import axios from 'axios';
 import FeedComponent from './FeedComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import urlconfig from '../../urlconfig';
+import './FeedPage.css';
 
 const FeedPage = () => {
   const [posts, setPosts] = useState([]);
@@ -39,7 +40,7 @@ const FeedPage = () => {
             </div>
           ))
         ) : (
-          <p>No posts available</p>
+          <p>No posts available or Loading...</p>
         )}
       </div>
     </div>

@@ -9,10 +9,11 @@ import logo from '../../../assets/logo.png';
 
 function Header({ user, onLogout }) {
   return (
-    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary rounded custom-navbar">
+    <Navbar collapseOnSelect expand="lg" className="custom-navbar">
       <Container>
         <Navbar.Brand as={Link} to="/">
           <img src={logo} alt="Social Media Logo" className="logo" />
+          <span>PostItUp</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

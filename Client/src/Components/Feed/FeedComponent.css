@@ -26,6 +26,7 @@
   font-weight: bold;
   font-size: 1.2em;
   color: #007bff;
+  text-decoration: none; /* Remove underline */
 }
 
 .post-date {
@@ -35,7 +36,6 @@
   text-align: right;
   margin-right: 0.6rem;
 }
-
 
 .post-image-feed-page {
   width: 100% !important; 
