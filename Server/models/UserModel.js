@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+const ConnectionSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true
+  },
+  dateConnected: {
+    type: Date,
+    default: Date.now
+  }
+});
+
 const PostSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -50,14 +61,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: 'https://avatar.iran.liara.run/public/47'
   },
-  connectionsCount: {
-    type: Number,
-    default: 0
-  },
-  connectionsUsernames: {
-    type: [String],
-    default: []
-  },
+  connections: [ConnectionSchema],
   postsCount: {
     type: Number,
     default: 0

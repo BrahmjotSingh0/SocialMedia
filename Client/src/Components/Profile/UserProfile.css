@@ -128,6 +128,11 @@
   margin-top: 10px;
 }
 
+.no-underline {
+  text-decoration: none;
+  color: inherit;
+}
+
 @media (max-width: 768px) {
   .profile-header {
     flex-direction: column;

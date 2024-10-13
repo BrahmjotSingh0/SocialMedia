@@ -10,6 +10,7 @@ import AddPost from './Components/AddPost/AddPost';
 import UserListPage from './Components/user/UserListPage';
 import UserProfile from './Components/Profile/UserProfile';
 import UserSettings from './Components/Profile/UserSettings';
+import ConnectionsPage from './Components/Profile/ConnectionsPage';
 import './App.css';
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/users" element={<UserListPage />} />
         <Route path="/user-profile/:username" element={<UserProfile loggedInUser={user} />} />
         <Route path="/user-settings" element={user ? <UserSettings user={user} /> : <Navigate to="/login" />} />
+        <Route path="/connections/:username" element={<ConnectionsPage loggedInUser={user} />} /> {/* Add route for ConnectionsPage */}
       </Routes>
       {loginMessage && <div className="alert alert-warning">{loginMessage}</div>}
     </div>

@@ -61,9 +61,9 @@ app.post('/register', async (req, res) => {
 
 app.put('/users/:id', async (req, res) => {
     const { id } = req.params;
-    const { email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts } = req.body;
+    const { email, username, bio, profilePicture, connections, postsCount, posts } = req.body;
     try {
-        const updatedUser = await UserModel.findByIdAndUpdate(id, { email, username, bio, profilePicture, connectionsCount, connectionsUsernames, postsCount, posts }, { new: true });
+        const updatedUser = await UserModel.findByIdAndUpdate(id, { email, username, bio, profilePicture, connections, postsCount, posts }, { new: true });
         res.status(200).json({ message: 'User updated successfully', user: updatedUser });
     } catch (err) {
         console.error('Error updating user:', err);
@@ -127,6 +127,47 @@ app.get('/posts', async (req, res) => {
         res.status(200).json(posts);
     } catch (err) {
         console.error('Error fetching posts:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+app.post('/connect', async (req, res) => {
+    const { userId, connectUsername } = req.body;
+    try {
+        const user = await UserModel.findById(userId);
+        const connectUser = await UserModel.findOne({ username: connectUsername });
+        if (!user || !connectUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        if (user.connections.some(connection => connection.username === connectUsername)) {
+            return res.status(400).json({ message: 'Already connected' });
+        }
+        user.connections.push({ username: connectUsername });
+        connectUser.connections.push({ username: user.username });
+        await user.save();
+        await connectUser.save();
+        res.status(200).json({ message: 'Connection successful' });
+    } catch (err) {
+        console.error('Error connecting users:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+app.post('/remove-connection', async (req, res) => {
+    const { userId, connectUsername } = req.body;
+    try {
+        const user = await UserModel.findById(userId);
+        const connectUser = await UserModel.findOne({ username: connectUsername });
+        if (!user || !connectUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        user.connections = user.connections.filter(connection => connection.username !== connectUsername);
+        connectUser.connections = connectUser.connections.filter(connection => connection.username !== user.username);
+        await user.save();
+        await connectUser.save();
+        res.status(200).json({ message: 'Connection removed successfully' });
+    } catch (err) {
+        console.error('Error removing connection:', err);
         res.status(500).json({ message: 'Server error' });
     }
 });

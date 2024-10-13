@@ -43,8 +43,7 @@ function UserListPage() {
               username={user.username}
               posts={user.postsCount}
               profile={user.profilePicture}
-              followers={user.connectionsCount}
-              following={user.connectionsUsernames.length}
+              connections={user.connections.length}
             />
           </div>
         ))}

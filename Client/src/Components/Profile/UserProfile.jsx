@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './UserProfile.css';
 import urlconfig from '../../urlconfig';
@@ -41,6 +40,23 @@ const UserProfile = ({ loggedInUser }) => {
     setSelectedPost(null);
   };
 
+  const handleConnect = async () => {
+    try {
+      await axios.post(`${urlconfig.API_URL}/connect`, {
+        userId: loggedInUser._id,
+        connectUsername: username
+      });
+      setUser(prevUser => ({
+        ...prevUser,
+        connections: [...prevUser.connections, { username: loggedInUser.username }]
+      }));
+    } catch (err) {
+      console.error('Error connecting:', err);
+    }
+  };
+
+  const isConnected = loggedInUser && user && user.connections.some(conn => conn.username === loggedInUser.username);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -60,14 +76,10 @@ const UserProfile = ({ loggedInUser }) => {
           <span className="stat-count">{user.postsCount}</span>
           <span className="stat-label">Posts</span>
         </div>
-        <div className="stat">
-          <span className="stat-count">{user.connectionsCount}</span>
-          <span className="stat-label">Followers</span>
-        </div>
-        <div className="stat">
-          <span className="stat-count">{user.connectionsUsernames.length}</span>
-          <span className="stat-label">Following</span>
-        </div>
+        <Link to={`/connections/${user.username}`} className="stat no-underline">
+          <span className="stat-count">{user.connections.length}</span>
+          <span className="stat-label">Connections</span>
+        </Link>
       </div>
       <div className="bio">
         <p>{user.bio}</p>
@@ -81,6 +93,15 @@ const UserProfile = ({ loggedInUser }) => {
             Settings
           </button>
         </div>
+      )}
+      {loggedInUser && loggedInUser.username !== username && (
+        isConnected ? (
+          <button className="btn btn-secondary" disabled>
+            Connection Added
+          </button>
+        ) : (
+          <button onClick={handleConnect} className="btn btn-primary">Connect</button>
+        )
       )}
       <div className="posts-grid">
         {user.posts.length > 0 ? (
