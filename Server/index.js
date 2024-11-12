@@ -172,6 +172,83 @@ app.post('/remove-connection', async (req, res) => {
     }
 });
 
+app.get('/chats', async (req, res) => {
+    const { username } = req.query;
+    console.log('Fetching chats for user:', username); // Log username
+    try {
+        const user = await UserModel.findOne({ username: username });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const chats = user.chats.map(chat => {
+            const otherUser = chat.participants.find(participant => participant !== username);
+            return {
+                ...chat.toObject(),
+                otherUser
+            };
+        });
+        res.status(200).json(chats);
+    } catch (err) {
+        console.error('Error fetching chats:', err); // Log the error
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+app.get('/chats/:username', async (req, res) => {
+    const { username } = req.params;
+    const { userUsername } = req.query; // Changed from userId to userUsername
+    console.log('Fetching chat for user:', userUsername, 'with:', username); // Log userUsername and username
+    try {
+        const user = await UserModel.findOne({ username: userUsername });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const chat = user.chats.find(chat => chat.participants.includes(username));
+        res.status(200).json(chat ? chat.messages : []);
+    } catch (err) {
+        console.error('Error fetching messages:', err); // Log the error
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+app.post('/chats', async (req, res) => {
+    const { senderUsername, receiverUsername, message } = req.body; // Changed from senderId to senderUsername
+    console.log('Sending message from:', senderUsername, 'to:', receiverUsername, 'message:', message); // Log message details
+    try {
+        const sender = await UserModel.findOne({ username: senderUsername });
+        const receiver = await UserModel.findOne({ username: receiverUsername });
+        if (!sender || !receiver) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        let senderChat = sender.chats.find(chat => chat.participants.includes(receiverUsername));
+        let receiverChat = receiver.chats.find(chat => chat.participants.includes(senderUsername));
+
+        if (!senderChat) {
+            senderChat = { participants: [senderUsername, receiverUsername], messages: [] };
+            sender.chats.push(senderChat);
+        }
+
+        if (!receiverChat) {
+            receiverChat = { participants: [senderUsername, receiverUsername], messages: [] };
+            receiver.chats.push(receiverChat);
+        }
+
+        const newMessage = { sender: senderUsername, message };
+        senderChat.messages.push(newMessage);
+        receiverChat.messages.push(newMessage);
+
+        await sender.save();
+        await receiver.save();
+
+        console.log('Message sent:', newMessage); // Log sent message
+        res.status(201).json(newMessage);
+    } catch (err) {
+        console.error('Error sending message:', err); // Log the error
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 app.listen(Port, () => {
     console.log(`Server is running on port ${Port}`);
 });

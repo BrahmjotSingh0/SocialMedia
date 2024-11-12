@@ -11,6 +11,26 @@ const ConnectionSchema = new mongoose.Schema({
   }
 });
 
+const MessageSchema = new mongoose.Schema({
+  sender: {
+    type: String, // Use username instead of ObjectId
+    required: true
+  },
+  message: {
+    type: String,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const ChatSchema = new mongoose.Schema({
+  participants: [String], // Array of usernames
+  messages: [MessageSchema]
+});
+
 const PostSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -66,7 +86,8 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  posts: [PostSchema]
+  posts: [PostSchema],
+  chats: [ChatSchema] // Add chats field
 });
 
 const UserModel = mongoose.model('User', UserSchema);

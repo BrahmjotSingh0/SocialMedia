@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
-import { FaUserFriends, FaPlusSquare, FaSignInAlt, FaUserPlus, FaUser } from 'react-icons/fa';
+import { FaUserFriends, FaPlusSquare, FaSignInAlt, FaUserPlus, FaUser, FaComments } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import './Navbar.css'; 
 import logo from '../../../assets/logo.png';
@@ -24,6 +24,11 @@ function Header({ user, onLogout }) {
             <Nav.Link as={Link} to="/add-post">
               <FaPlusSquare size={24} />
             </Nav.Link>
+            {user && (
+              <Nav.Link as={Link} to="/chats">
+                <FaComments size={24} />
+              </Nav.Link>
+            )}
           </Nav>
           <Nav>
             {user ? (

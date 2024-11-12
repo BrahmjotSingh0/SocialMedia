@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
@@ -21,6 +22,7 @@ const UserProfile = ({ loggedInUser }) => {
         const response = await axios.get(`${urlconfig.API_URL}/users/${username}`);
         setUser(response.data);
         setLoading(false);
+      // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setError('Error fetching user data');
         setLoading(false);
@@ -95,13 +97,16 @@ const UserProfile = ({ loggedInUser }) => {
         </div>
       )}
       {loggedInUser && loggedInUser.username !== username && (
-        isConnected ? (
-          <button className="btn btn-secondary" disabled>
-            Connection Added
-          </button>
-        ) : (
-          <button onClick={handleConnect} className="btn btn-primary">Connect</button>
-        )
+        <>
+          {isConnected ? (
+            <button className="btn btn-secondary" disabled>
+              Connection Added
+            </button>
+          ) : (
+            <button onClick={handleConnect} className="btn btn-primary">Connect</button>
+          )}
+          <button onClick={() => navigate(`/chat/${username}`)} className="btn btn-primary">Chat</button>
+        </>
       )}
       <div className="posts-grid">
         {user.posts.length > 0 ? (

@@ -1,0 +1,115 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  color:black;
+  border-bottom: 1px solid black;
+}
+
+.chat-header-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.chat-header-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat-header-username {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+.message {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 60%;
+  position: relative;
+  color: black; /* Set text color to black */
+}
+
+.sent {
+  background-color: #dcf8c6;
+  align-self: flex-end;
+  margin-left: auto; /* Align sent messages to the right */
+}
+
+.received {
+  background-color: #fff;
+  align-self: flex-start;
+  margin-right: auto; /* Align received messages to the left */
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.message-profile-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.message-username {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.message-time {
+  font-size: 0.8em;
+  color: #777;
+  position: absolute;
+  bottom: -15px;
+  right: 10px;
+}
+
+.message-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.message-input button {
+  padding: 10px 15px; /* Make the send button smaller */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.message-input button:hover {
+  background-color: #0056b3;
+}
