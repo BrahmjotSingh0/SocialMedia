@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
@@ -6,13 +6,22 @@ import Overlay from '../Overlay/Overlay';
 import './Login.css';
 import urlconfig from '../../urlconfig';
 import logo from '../../../assets/logo.png';
-import googleLogo from '../../../assets/google-logo.svg'; 
+import googleLogo from '../../../assets/google-logo.svg';
+import Cookies from 'js-cookie';
+
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [overlayMessage, setOverlayMessage] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = Cookies.get('user');
+    if (storedUser) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

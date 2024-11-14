@@ -43,15 +43,33 @@ function App() {
       <Header user={user} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<FeedPage />} />
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/add-post" element={user ? <AddPost user={user} /> : <Navigate to="/login" state={{ from: location }} />} />
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/" /> : <Login onLogin={handleLogin} />}
+        />
+        <Route
+          path="/register"
+          element={user ? <Navigate to="/" /> : <Register />}
+        />
+        <Route
+          path="/add-post"
+          element={user ? <AddPost user={user} /> : <Navigate to="/login" state={{ from: location }} />}
+        />
         <Route path="/users" element={<UserListPage />} />
         <Route path="/user-profile/:username" element={<UserProfile loggedInUser={user} />} />
-        <Route path="/user-settings" element={user ? <UserSettings user={user} /> : <Navigate to="/login" state={{ from: location }} />} />
+        <Route
+          path="/user-settings"
+          element={user ? <UserSettings user={user} /> : <Navigate to="/login" state={{ from: location }} />}
+        />
         <Route path="/connections/:username" element={<ConnectionsPage loggedInUser={user} />} />
-        <Route path="/chats" element={user ? <ChatList loggedInUser={user} /> : <Navigate to="/login" state={{ from: location }} />} /> {/* Add route for ChatList */}
-        <Route path="/chat/:username" element={user ? <Chat loggedInUser={user} /> : <Navigate to="/login" state={{ from: location }} />} /> {/* Add route for Chat */}
+        <Route
+          path="/chats"
+          element={user ? <ChatList loggedInUser={user} /> : <Navigate to="/login" state={{ from: location }} />}
+        />
+        <Route
+          path="/chat/:username"
+          element={user ? <Chat loggedInUser={user} /> : <Navigate to="/login" state={{ from: location }} />}
+        />
       </Routes>
       {loginMessage && <div className="alert alert-warning">{loginMessage}</div>}
     </div>

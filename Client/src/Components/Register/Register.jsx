@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import axios from 'axios';
 import Overlay from '../Overlay/Overlay';
 import './Register.css';
@@ -14,6 +15,13 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [overlayMessage, setOverlayMessage] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = Cookies.get('user');
+    if (storedUser) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
