@@ -2,22 +2,32 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
+  background-color: #121212;
+  color: #ffffff;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .chat-item {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  padding: 15px;
+  border-bottom: 1px solid #333;
   text-decoration: none;
   color: inherit;
+  transition: background-color 0.3s ease;
+}
+
+.chat-item:hover {
+  background-color: #1e1e1e;
 }
 
 .chat-profile-image {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 15px;
+  border: 2px solid #00ffcc;
 }
 
 .chat-info {
@@ -27,9 +37,15 @@
 
 .chat-username {
   font-weight: bold;
-  color: #333;
+  color: #00ffcc;
 }
 
 .chat-tap {
   color: #777;
+}
+
+.error-message {
+  color: #ff0066;
+  text-align: center;
+  margin-top: 20px;
 }

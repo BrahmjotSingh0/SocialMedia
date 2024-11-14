@@ -32,7 +32,7 @@ const ChatList = ({ loggedInUser }) => {
   }, [loggedInUser]);
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="error-message">{error}</div>;
   }
 
   return (

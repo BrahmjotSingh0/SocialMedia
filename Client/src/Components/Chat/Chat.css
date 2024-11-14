@@ -3,15 +3,15 @@
   flex-direction: column;
   height: 100vh;
   padding: 20px;
-  background-color: #f0f0f0;
+  background-color: #121212;
+  color: #ffffff;
 }
 
 .chat-header {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  color:black;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #333;
 }
 
 .chat-header-link {
@@ -26,11 +26,13 @@
   height: 50px;
   border-radius: 50%;
   margin-right: 10px;
+  border: 2px solid #00ffcc;
 }
 
 .chat-header-username {
   font-size: 1.5em;
   font-weight: bold;
+  color: #00ffcc;
 }
 
 .messages {
@@ -45,19 +47,19 @@
   border-radius: 10px;
   max-width: 60%;
   position: relative;
-  color: black; /* Set text color to black */
+  color: #ffffff;
 }
 
 .sent {
-  background-color: #dcf8c6;
+  background-color: #007bff;
   align-self: flex-end;
-  margin-left: auto; /* Align sent messages to the right */
+  margin-left: auto;
 }
 
 .received {
-  background-color: #fff;
+  background-color: #333;
   align-self: flex-start;
-  margin-right: auto; /* Align received messages to the left */
+  margin-right: auto;
 }
 
 .message-header {
@@ -76,6 +78,7 @@
 .message-username {
   font-size: 1em;
   font-weight: bold;
+  color: #00ffcc;
 }
 
 .message-time {
@@ -86,30 +89,49 @@
   right: 10px;
 }
 
-.message-input {
+.message-input-chat {
   display: flex;
   align-items: center;
   padding: 10px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #333;
 }
 
-.message-input input {
-  flex: 1;
+.message-input-chat .unique-input-classname {
+  flex-grow: 1;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #333;
   border-radius: 20px;
   margin-right: 10px;
+  background-color: #1e1e1e;
+  color: #ffffff;
 }
 
-.message-input button {
-  padding: 10px 15px; /* Make the send button smaller */
+.message-input-chat .unique-input-classname::placeholder {
+  color: #777;
+}
+
+.message-input-chat .button-send-message {
+  padding: 10px 15px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 20px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
-.message-input button:hover {
+.message-input-chat .button-send-message:hover {
   background-color: #0056b3;
+}
+
+.error-message {
+  color: #ff0066;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loading-message {
+  color: #00ffcc;
+  text-align: center;
+  margin-top: 20px;
 }

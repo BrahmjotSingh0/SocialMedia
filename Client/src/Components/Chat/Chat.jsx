@@ -81,11 +81,11 @@ const Chat = ({ loggedInUser }) => {
   };
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="error-message">{error}</div>;
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading-message">Loading...</div>;
   }
 
   return (
@@ -117,11 +117,17 @@ const Chat = ({ loggedInUser }) => {
       <div className="message-input-chat">
         <input
           type="text"
+          className="unique-input-classname"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type a message..."
         />
-        <button onClick={handleSendMessage}>Send</button>
+        <button 
+          onClick={handleSendMessage}
+          className="button-send-message"
+        >
+          Send
+        </button>
       </div>
     </div>
   );
