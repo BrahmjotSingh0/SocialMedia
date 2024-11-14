@@ -1,35 +1,58 @@
-.main-content {
-  margin: 20px;
+.main-content-add-post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   padding: 20px;
-  background-color: #1f1f1f;
-  border-radius: 5px;
+  background-color: #121212;
+  color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.page-name {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+.page-name-add-post {
+  font-family: 'Bungee Spice', cursive;
+  font-size: 2.5rem;
+  color: #00ffcc;
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.form-group {
+.add-post-form {
+  width: 100%;
+  max-width: 500px;
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.form-group-add-post {
   margin-bottom: 15px;
 }
 
-.form-group label {
+.label-add-post {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  color: #00ffcc;
 }
 
-.form-group input {
+.input-add-post {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #333;
   border-radius: 4px;
+  background-color: #2a2a2a;
+  color: #ffffff;
 }
 
-.btn {
+.input-add-post::placeholder {
+  color: #777;
+}
+
+.btn-add-post {
   display: block;
   width: 100%;
   padding: 10px;
@@ -38,8 +61,9 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.btn:hover {
+.btn-add-post:hover {
   background-color: #0056b3;
 }

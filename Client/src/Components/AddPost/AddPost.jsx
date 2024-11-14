@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -15,7 +14,6 @@ function AddPost({ user }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // eslint-disable-next-line no-unused-vars
       const response = await axios.post(`${urlconfig.API_URL}/posts`, {
         title,
         caption,
@@ -34,23 +32,23 @@ function AddPost({ user }) {
   };
 
   return (
-    <div className="main-content">
-      <h1 className="page-name">Add Post</h1>
+    <div className="main-content-add-post">
+      <h1 className="page-name-add-post">Add Post</h1>
       {overlayMessage && <Overlay message={overlayMessage} onClose={closeOverlay} />}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Title:</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+      <form onSubmit={handleSubmit} className="add-post-form">
+        <div className="form-group-add-post">
+          <label className="label-add-post">Title:</label>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required className="input-add-post" />
         </div>
-        <div className="form-group">
-          <label>Caption:</label>
-          <input type="text" value={caption} onChange={(e) => setCaption(e.target.value)} required />
+        <div className="form-group-add-post">
+          <label className="label-add-post">Caption:</label>
+          <input type="text" value={caption} onChange={(e) => setCaption(e.target.value)} required className="input-add-post" />
         </div>
-        <div className="form-group">
-          <label>Image URL:</label>
-          <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} required />
+        <div className="form-group-add-post">
+          <label className="label-add-post">Image URL:</label>
+          <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} required className="input-add-post" />
         </div>
-        <button type="submit" className="btn">
+        <button type="submit" className="btn-add-post">
           Add Post
         </button>
       </form>
