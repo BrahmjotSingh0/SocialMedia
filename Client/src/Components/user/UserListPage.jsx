@@ -28,7 +28,7 @@ function UserListPage() {
 
   return (
     <div className="container user-list-page">
-      <h1 className='page-name'>User List Page</h1>
+      <h1 className='page-name'></h1>
       <input
         type="text"
         placeholder="Search by username"
@@ -38,7 +38,7 @@ function UserListPage() {
       />
       <div className="row">
         {filteredUsers.map((user, index) => (
-          <div className="col-md-6" key={index}>
+          <div className="col-md-6 col-lg-4" key={index}>
             <UserComponent
               username={user.username}
               posts={user.postsCount}

@@ -1,10 +1,16 @@
 .user-box {
-  border: 1px solid #ccc;
+  border: 1px solid #333;
   padding: 16px;
   margin: 16px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   text-align: center;
+  background-color: #1e1e1e;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.user-box:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
 .profile-img {
@@ -12,19 +18,39 @@
   height: 100px;
   border-radius: 50%;
   margin-bottom: 16px;
+  border: 2px solid #00ffcc;
 }
 
-.page-name {
-  font-size: 24px;
+.rounded-border {
+  border: 2px solid #00ffcc;
+}
+
+.username {
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 8px;
-  align-items: center;
-  text-align: center;
-  margin: 5px;
+  color: #00ffcc;
+}
+
+.user-info {
+  color: #ffffff;
+}
+
+.view-profile-button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-profile-button:hover {
+  background-color: #0056b3;
 }
 
 @media screen and (max-width: 768px) {
   .username {
-    font-size: 1.5rem !important;
+    font-size: 1.2rem;
   }
 }

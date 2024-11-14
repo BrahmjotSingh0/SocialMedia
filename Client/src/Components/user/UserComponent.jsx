@@ -10,7 +10,7 @@ function UserComponent(props) {
       <h1 className="username">{props.username}</h1>
       <p className="user-info">Posts: {props.posts}</p>
       <p className="user-info">Connections: {props.connections}</p>
-      <Button as={Link} to={`/user-profile/${props.username}`} variant="primary">View Profile</Button>
+      <Button as={Link} to={`/user-profile/${props.username}`} variant="primary" className="view-profile-button">View Profile</Button>
     </div>
   );
 }

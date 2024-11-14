@@ -3,12 +3,18 @@
 }
 
 .search-bar {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  font-size: 18px;
+	font-weight: bold;
+	width: 100%;
+	outline: none;
+	background: #333333;
+	color: #FFFFFF;
+	border: 2px solid #00FFCC;
+	border-radius: 20px;
+	box-shadow: 3px 3px 2px 0px #E2E2E2;
+	transition: .3s ease;
 }
+
 
 .user-box {
   border: 1px solid #ccc;
@@ -17,7 +23,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
-  background-color: #fff;
+  background-color: #333333;
   transition: box-shadow 0.3s ease-in-out;
 }
 
@@ -33,15 +39,15 @@
 }
 
 .rounded-border {
-  border: 2px solid #000;
+  border: 2px solid #00FFCC;
 }
 
 .username {
-  color: black;
+  color: #00FFCC;
 }
 
 .user-info {
-  color: black;
+  color: rgb(255, 255, 255);
 }
 
 .page-name {
