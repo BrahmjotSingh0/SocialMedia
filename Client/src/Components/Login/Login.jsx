@@ -54,7 +54,7 @@ const Login = ({ onLogin }) => {
   return (
     <div className="signin-container">
       {overlayMessage && <Overlay message={overlayMessage} onClose={closeOverlay} />}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="signin-form">
         <div className="login-header">
           <img src={logo} alt="logo" className="logo" />
           <div className="title-container">

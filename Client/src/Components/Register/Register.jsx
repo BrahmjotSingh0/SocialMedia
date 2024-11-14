@@ -6,7 +6,7 @@ import './Register.css';
 import { useNavigate } from 'react-router-dom';
 import urlconfig from '../../urlconfig';
 import logo from '../../../assets/logo.png';
-import googleLogo from '../../../assets/google-logo.svg'; // Add Google logo
+import googleLogo from '../../../assets/google-logo.svg';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -53,7 +53,7 @@ const Register = () => {
   return (
     <div className="signup-container">
       {overlayMessage && <Overlay message={overlayMessage} onClose={closeOverlay} />}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="signup-form">
         <div className="signup-header">
           <img src={logo} alt="logo" className="logo" />
           <div className="title-container">
