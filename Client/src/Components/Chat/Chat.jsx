@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import io from 'socket.io-client';
 import './Chat.css';
 import urlconfig from '../../urlconfig';
 import Overlay from '../Overlay/Overlay';
+
+const socket = io(urlconfig.API_URL);
 
 const Chat = ({ loggedInUser }) => {
   const { username } = useParams();
@@ -43,6 +46,16 @@ const Chat = ({ loggedInUser }) => {
     };
 
     fetchData();
+
+    socket.emit('join', loggedInUser.username);
+
+    socket.on('receiveMessage', (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      socket.off('receiveMessage');
+    };
   }, [username, loggedInUser]);
 
   const handleSendMessage = async () => {
@@ -51,18 +64,20 @@ const Chat = ({ loggedInUser }) => {
       return;
     }
 
-   
-    try {
-      const response = await axios.post(`${urlconfig.API_URL}/chats`, {
-        senderUsername: loggedInUser.username,
-        receiverUsername: username,
-        message: newMessage
-      });
-      setMessages([...messages, response.data]);
+    socket.emit('sendMessage', {
+      senderUsername: loggedInUser.username,
+      receiverUsername: username,
+      message: newMessage
+    });
+
+    socket.on('messageSent', (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
       setNewMessage('');
-    } catch (err) {
-      setError('Error sending message');
-    }
+    });
+
+    socket.on('error', (errorMessage) => {
+      setError(errorMessage);
+    });
   };
 
   if (error) {

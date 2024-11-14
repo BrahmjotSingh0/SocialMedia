@@ -3,10 +3,22 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const UserModel = require('./models/UserModel');
 const dotenv = require('dotenv');
+const http = require('http');
+const socketIo = require('socket.io');
 
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
+    cors: {
+        origin: ['http://localhost:5173', 'https://postitup.netlify.app'], // Add your frontend URLs here
+        methods: ['GET', 'POST'],
+        allowedHeaders: ['Content-Type'],
+        credentials: true
+    }
+});
+
 const Port = process.env.PORT || 3001;
 
 app.use(express.json());
@@ -234,7 +246,7 @@ app.post('/chats', async (req, res) => {
             receiver.chats.push(receiverChat);
         }
 
-        const newMessage = { sender: senderUsername, message };
+        const newMessage = { sender: senderUsername, message, createdAt: new Date() };
         senderChat.messages.push(newMessage);
         receiverChat.messages.push(newMessage);
 
@@ -242,6 +254,7 @@ app.post('/chats', async (req, res) => {
         await receiver.save();
 
         console.log('Message sent:', newMessage); // Log sent message
+        io.to(receiverUsername).emit('receiveMessage', newMessage);
         res.status(201).json(newMessage);
     } catch (err) {
         console.error('Error sending message:', err); // Log the error
@@ -249,6 +262,55 @@ app.post('/chats', async (req, res) => {
     }
 });
 
-app.listen(Port, () => {
+io.on('connection', (socket) => {
+    console.log('New client connected');
+
+    socket.on('sendMessage', async ({ senderUsername, receiverUsername, message }) => {
+        try {
+            const sender = await UserModel.findOne({ username: senderUsername });
+            const receiver = await UserModel.findOne({ username: receiverUsername });
+
+            if (!sender || !receiver) {
+                socket.emit('error', 'User not found');
+                return;
+            }
+
+            let senderChat = sender.chats.find(chat => chat.participants.includes(receiverUsername));
+            let receiverChat = receiver.chats.find(chat => chat.participants.includes(senderUsername));
+
+            if (!senderChat) {
+                senderChat = { participants: [senderUsername, receiverUsername], messages: [] };
+                sender.chats.push(senderChat);
+            }
+
+            if (!receiverChat) {
+                receiverChat = { participants: [senderUsername, receiverUsername], messages: [] };
+                receiver.chats.push(receiverChat);
+            }
+
+            const newMessage = { sender: senderUsername, message, createdAt: new Date() };
+            senderChat.messages.push(newMessage);
+            receiverChat.messages.push(newMessage);
+
+            await sender.save();
+            await receiver.save();
+
+            io.to(receiverUsername).emit('receiveMessage', newMessage);
+            socket.emit('messageSent', newMessage);
+        } catch (err) {
+            socket.emit('error', 'Error sending message');
+        }
+    });
+
+    socket.on('join', (username) => {
+        socket.join(username);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+});
+
+server.listen(Port, () => {
     console.log(`Server is running on port ${Port}`);
 });
