@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -42,11 +41,9 @@ const UserSettings = ({ user }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      // Fetch the latest user data
       const response = await axios.get(`${urlconfig.API_URL}/users/${user.username}`);
       const latestUser = response.data;
 
-      // Merge the latest user data with the updated fields
       const updatedUser = {
         ...latestUser,
         email,
@@ -55,15 +52,14 @@ const UserSettings = ({ user }) => {
         profilePicture,
         connectionsCount,
         connectionsUsernames,
-        postsCount: latestUser.postsCount, // Ensure the latest postsCount is used
-        posts: latestUser.posts // Ensure the latest posts are used
+        postsCount: latestUser.postsCount,
+        posts: latestUser.posts
       };
 
       const updateResponse = await axios.put(`${urlconfig.API_URL}/users/${user._id}`, updatedUser);
       setOverlayMessage('User updated successfully');
       console.log('User updated:', updateResponse.data);
 
-      // Update state with the latest user data
       setEmail(updateResponse.data.email);
       setUsername(updateResponse.data.username);
       setBio(updateResponse.data.bio || '');
@@ -90,27 +86,27 @@ const UserSettings = ({ user }) => {
 
   return (
     <div className="user-settings">
-      <h2>User Settings</h2>
+      <h2 className="user-settings-title">User Settings</h2>
       {error && <p className="error">{error}</p>}
       {overlayMessage && <Overlay message={overlayMessage} onClose={closeOverlay} />}
-      <form onSubmit={handleUpdate}>
+      <form onSubmit={handleUpdate} className="user-settings-form">
         <div className="form-group">
-          <label>Email</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <label className="user-settings-label">Email</label>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="user-settings-input" />
         </div>
         <div className="form-group">
-          <label>Username</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+          <label className="user-settings-label">Username</label>
+          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required className="user-settings-input" />
         </div>
         <div className="form-group">
-          <label>Bio</label>
-          <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
+          <label className="user-settings-label">Bio</label>
+          <textarea value={bio} onChange={(e) => setBio(e.target.value)} className="user-settings-textarea" />
         </div>
         <div className="form-group">
-          <label>Profile Picture</label>
-          <input type="text" value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} />
+          <label className="user-settings-label">Profile Picture</label>
+          <input type="text" value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} className="user-settings-input" />
         </div>
-        <button type="submit">Update</button>
+        <button type="submit" className="user-settings-button">Update</button>
       </form>
     </div>
   );

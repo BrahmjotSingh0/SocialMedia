@@ -58,7 +58,7 @@ const ConnectionsPage = ({ loggedInUser }) => {
   return (
     <div className="container-for-connections-page">
       <div className="connections-page-wrapper">
-        <h1>{username}'s Connections</h1>
+        <h1 className="connections-page-title">{username}'s Connections</h1>
         <div className="connections-list-wrapper">
           {connections.map((connection, index) => (
             <div key={index} className="connection-item-wrapper">

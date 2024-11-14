@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
@@ -22,7 +21,6 @@ const UserProfile = ({ loggedInUser }) => {
         const response = await axios.get(`${urlconfig.API_URL}/users/${username}`);
         setUser(response.data);
         setLoading(false);
-      // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setError('Error fetching user data');
         setLoading(false);
@@ -112,7 +110,9 @@ const UserProfile = ({ loggedInUser }) => {
         {user.posts.length > 0 ? (
           user.posts.map((post, index) => (
             <div key={index} className="post-item" onClick={() => handlePostClick(post)}>
-              <img src={post.image} alt={`Post ${index + 1}`} className="post-image" />
+              <div className="post-image-container">
+                <img src={post.image} alt={`Post ${index + 1}`} className="post-image" />
+              </div>
               <div className="post-content">
                 <h3 className="post-title">{post.title}</h3>
                 <p className="post-caption">{post.caption}</p>
