@@ -1,0 +1,75 @@
+.connections-component {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.connections-heading {
+  font-size: 1.5rem;
+  color: #00ffcc;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.connection-box {
+  display: flex;
+  align-items: center;
+  background-color: #2a2a2a;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.connection-profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid #00ffcc;
+}
+
+.connection-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.connection-username {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #00ffcc;
+  text-decoration: none;
+}
+
+.connection-details {
+  color: #ffffff;
+}
+
+.see-more-button {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #00ffcc;
+  color: #121212;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.see-more-button:hover {
+  background-color: #ff0066;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 768px) {
+  .connections-component {
+    margin-bottom: 20px;
+  }
+}

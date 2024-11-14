@@ -1,17 +1,19 @@
 .feed-component {
-  border: 1px solid #ddd;
+  border: 1px solid #333;
   border-radius: 8px;
   margin-bottom: 20px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  padding: 20px;
+  max-width: 100%; /* Ensure the feed component does not exceed the container width */
 }
 
 .feed-header {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #333;
 }
 
 .user-image {
@@ -19,58 +21,83 @@
   height: 50px;
   border-radius: 50%;
   margin-right: 10px;
-  border: 2px solid #007bff;
+  border: 2px solid #00ffcc;
 }
 
 .username {
   font-weight: bold;
   font-size: 1.2em;
-  color: #007bff;
-  text-decoration: none; /* Remove underline */
+  color: #00ffcc;
+  text-decoration: none;
 }
 
-.post-date {
-  font-size: 1rem;
-  color: #555;
-  font-weight: 700;
-  text-align: right;
-  margin-right: 0.6rem;
+.post-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px; /* Fixed height for all posts */
+  overflow: hidden;
+  margin: 20px 0;
 }
 
-.post-image-feed-page {
-  width: 100% !important; 
-  height: auto;
-  display: block;
-  object-fit: cover; 
+.post-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .feed-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  border-top: 1px solid #333;
 }
 
-.likes, .comments {
+.like-button {
+  background: none;
+  border: none;
+  color: #00ffcc;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.like-button:hover {
+  color: #ff0066;
+}
+
+.comments {
   font-weight: bold;
-  color: #555;
+  color: #ffffff;
+}
+
+.post-date {
+  font-size: 0.9rem;
+  color: #888;
+  text-align: right;
+  margin-top: 10px;
 }
 
 .comment-box {
   width: 100%;
-  padding: 10px;
-  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  border-top: 1px solid #333;
+  background-color: #2a2a2a;
 }
 
 .comment-input {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid #333;
   border-radius: 4px;
-  margin-top: 10px;
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+.comment-input::placeholder {
+  color: #888;
 }
 
 @media (max-width: 768px) {
@@ -84,7 +111,7 @@
     align-items: flex-start;
   }
 
-  .likes, .comments {
+  .like-button, .comments {
     margin-bottom: 10px;
   }
 }

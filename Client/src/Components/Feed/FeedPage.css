@@ -1,12 +1,51 @@
-.page-name {
-    font-family: 'Bungee Spice', cursive;
-    margin: 2rem !important;
-    font-size: 4rem !important;
-  }
+.feed-page-container {
+  background-color: #121212;
+  color: #ffffff;
+  padding: 20px;
+}
+
+.Page-HEading_for_feed_page {
+  font-family: 'Bungee Spice', cursive;
+  margin: 2rem !important;
+  font-size: 4rem !important;
+  color: #00ffcc;
+  text-align: center;
+}
+
+.feed-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.posts-section {
+  flex: 0 0 70%;
+}
+
+.connections-section {
+  flex: 0 0 28%;
+}
+
+.feed-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.no-posts-message {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
 
 @media screen and (max-width: 768px) {
-    .page-name {
-        font-size: 1rem !important;
-    }
-  
+  .feed-content {
+    flex-direction: column;
+  }
+
+  .Page-HEading_for_feed_page {
+    font-size: 2rem !important;
+  }
 }
