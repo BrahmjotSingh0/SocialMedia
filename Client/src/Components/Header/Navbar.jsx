@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
-import { FaUserFriends, FaPlusSquare, FaSignInAlt, FaUserPlus, FaUser, FaComments } from 'react-icons/fa';
+import { FaUserFriends, FaPlusSquare, FaSignInAlt, FaUserPlus, FaUser, FaComments, FaHome } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import './Navbar.css'; 
 import logo from '../../../assets/logo.png';
@@ -13,11 +13,14 @@ function Header({ user, onLogout }) {
       <Container>
         <Navbar.Brand as={Link} to="/">
           <img src={logo} alt="Social Media Logo" className="logo" />
-          <span>PostItUp</span>
+          <span className="brand-name">PostItUp</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">
+              <FaHome size={24} />
+            </Nav.Link>
             <Nav.Link as={Link} to="/users">
               <FaUserFriends size={24} />
             </Nav.Link>
