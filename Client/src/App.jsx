@@ -10,8 +10,8 @@ import UserListPage from './Components/user/UserListPage';
 import UserProfile from './Components/Profile/UserProfile';
 import UserSettings from './Components/Profile/UserSettings';
 import ConnectionsPage from './Components/Profile/ConnectionsPage';
-import ChatList from './Components/Chat/ChatList'; // Import ChatList component
-import Chat from './Components/Chat/Chat'; // Import Chat component
+import ChatList from './Components/Chat/ChatList'; 
+import Chat from './Components/Chat/Chat'; 
 import './App.css';
 
 function App() {

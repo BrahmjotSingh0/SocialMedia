@@ -25,4 +25,4 @@ dist-ssr
 
 
 # url
-.urlconfig.js
+src/urlconfig.js

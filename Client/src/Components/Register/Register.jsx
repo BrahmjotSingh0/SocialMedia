@@ -33,7 +33,7 @@ const Register = () => {
       const response = await axios.post(`${urlconfig.API_URL}/register`, { email, username, password });
       setOverlayMessage(response.data.message);
       setTimeout(() => {
-        navigate('/login'); // Redirect to Login page after registration
+        navigate('/login'); 
       }, 2000);
     } catch (err) {
       console.error(err);
