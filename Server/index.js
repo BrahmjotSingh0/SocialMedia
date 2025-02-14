@@ -12,7 +12,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-        origin: ['http://localhost:5173', 'https://postitup.netlify.app'], // Add your frontend URLs here
+        origin: ['http://localhost:5173', 'https://postitup.netlify.app'], 
         methods: ['GET', 'POST'],
         allowedHeaders: ['Content-Type'],
         credentials: true
@@ -186,7 +186,7 @@ app.post('/remove-connection', async (req, res) => {
 
 app.get('/chats', async (req, res) => {
     const { username } = req.query;
-    console.log('Fetching chats for user:', username); // Log username
+    console.log('Fetching chats for user:', username); 
     try {
         const user = await UserModel.findOne({ username: username });
         if (!user) {
@@ -201,15 +201,15 @@ app.get('/chats', async (req, res) => {
         });
         res.status(200).json(chats);
     } catch (err) {
-        console.error('Error fetching chats:', err); // Log the error
+        console.error('Error fetching chats:', err); 
         res.status(500).json({ message: 'Server error' });
     }
 });
 
 app.get('/chats/:username', async (req, res) => {
     const { username } = req.params;
-    const { userUsername } = req.query; // Changed from userId to userUsername
-    console.log('Fetching chat for user:', userUsername, 'with:', username); // Log userUsername and username
+    const { userUsername } = req.query; 
+    console.log('Fetching chat for user:', userUsername, 'with:', username);
     try {
         const user = await UserModel.findOne({ username: userUsername });
         if (!user) {
@@ -218,14 +218,14 @@ app.get('/chats/:username', async (req, res) => {
         const chat = user.chats.find(chat => chat.participants.includes(username));
         res.status(200).json(chat ? chat.messages : []);
     } catch (err) {
-        console.error('Error fetching messages:', err); // Log the error
+        console.error('Error fetching messages:', err); 
         res.status(500).json({ message: 'Server error' });
     }
 });
 
 app.post('/chats', async (req, res) => {
-    const { senderUsername, receiverUsername, message } = req.body; // Changed from senderId to senderUsername
-    console.log('Sending message from:', senderUsername, 'to:', receiverUsername, 'message:', message); // Log message details
+    const { senderUsername, receiverUsername, message } = req.body; 
+    console.log('Sending message from:', senderUsername, 'to:', receiverUsername, 'message:', message); 
     try {
         const sender = await UserModel.findOne({ username: senderUsername });
         const receiver = await UserModel.findOne({ username: receiverUsername });
@@ -253,11 +253,11 @@ app.post('/chats', async (req, res) => {
         await sender.save();
         await receiver.save();
 
-        console.log('Message sent:', newMessage); // Log sent message
+        console.log('Message sent:', newMessage); 
         io.to(receiverUsername).emit('receiveMessage', newMessage);
         res.status(201).json(newMessage);
     } catch (err) {
-        console.error('Error sending message:', err); // Log the error
+        console.error('Error sending message:', err); 
         res.status(500).json({ message: 'Server error' });
     }
 });
